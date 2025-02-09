@@ -11,11 +11,16 @@ app.listen(9999, () => {
 })
 
 //demo request handler
-app.use("/demo1", (req, res) => {
+app.get("/demo1", (req, res) => {
     res.send("Namaste Duniya bhai");
 })
 
 //demo request handler
-app.use("/demo2", (req, res) => {
+app.post("/demo2", (req, res) => {
     res.send("hello jo");
+})
+
+//default reqesut handler
+app.use("/", (req, res) => {
+    res.send("Welcome to my server");
 })
