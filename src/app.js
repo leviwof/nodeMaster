@@ -1,5 +1,4 @@
 console.log("First push done");
-
 //express server required using required
 const express = require("express");
 //using express server
@@ -21,6 +20,29 @@ app.post("/demo2", (req, res) => {
 })
 
 //default reqesut handler
-app.use("/", (req, res) => {
+app.use("/admin", (req, res, next) => {
     res.send("Welcome to my server");
+    const token = "oye";
+    const isAdminAuth = token === "xyz";
+    if (!isAdminAuth) {
+        res.send("Unauthorized hai admin")
+    } else {
+        next();
+    }
+});
+
+app.get("/admin/getAllData", (req, res) => {
+    res.send("All Data Sent");
 })
+
+app.get("/admin/deleteUSer", (req, res) => {
+    res.send("Deleted a user");
+})
+
+//1st best way is try catch
+//2nd best way of error handling 
+app.use("/", (err, req, res, next) => {
+    if (err) {
+        res.send("Something went wrong ");
+    }
+});

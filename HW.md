@@ -20,3 +20,11 @@ Install Postman app and make a workspace/collection > test API call
 Write logic to handle GET,POST,PATCH,DELETE API Calls and test them on Postman
 Explore routing and use of ? , +, (), * in the routes
 Use of regex in routes /a/ , /.*fly$
+
+Multiple Route handlers -Play with the routers
+next()
+next function and errors along with res.send()
+app.use("/route",rH,[rH2,rH3],rH4,rH5);
+what is a middleware
+how express js basically work behind the scene .
+dbz app.use vs app.all method
