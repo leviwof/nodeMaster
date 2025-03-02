@@ -28,3 +28,12 @@ app.use("/route",rH,[rH2,rH3],rH4,rH5);
 what is a middleware
 how express js basically work behind the scene .
 dbz app.use vs app.all method
+
+Create a free cluster on mongodb(Atlas)
+Install mongoose library
+connect your application to mongodb database(using cnnection url)
+call the connectDb function and connect the db before starting your application
+create a user schema & user model
+create POST /signup API to add data to db
+push some documents using API calls from postman
+Error handling using try/catch
