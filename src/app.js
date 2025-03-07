@@ -10,6 +10,7 @@ const app = express();
 //started middleware for json for req.body
 app.use(express.json());
 
+// User model for databse
 const User = require("./models/user");
 
 //find a single user
@@ -23,7 +24,7 @@ app.get("/user", async (req, res) => {
       res.send(users);
     }
   } catch (error) {
-    return error;
+    res.status(400).send(error);
   }
 })
 //find all users
@@ -37,7 +38,7 @@ app.get("/getAllUser", async (req, res) => {
       res.send(user)
     }
   } catch (error) {
-    return error;
+    res.status(400).send(error);
   }
 })
 
@@ -53,7 +54,7 @@ app.delete("/deleteUser", async (req, res) => {
       res.send("User deleted successfully");
     }
   } catch (error) {
-    return error;
+    res.status(400).send(error);
   }
 })
 
@@ -63,7 +64,9 @@ app.patch("/updateUser", async (req, res) => {
   const userId = req.body.userId;
   console.log(data)
   try {
-    const userData = await User.findByIdAndUpdate({ _id: userId }, data)
+    const userData = await User.findByIdAndUpdate({ _id: userId },
+      data,
+      { runValidators: true });
     console.log(userData)
     if (!userData || userData.length === 0) {
       res.send("User not found")
@@ -71,18 +74,20 @@ app.patch("/updateUser", async (req, res) => {
       res.send("User updated successfully")
     }
   } catch (error) {
-    return error;
+    res.status(400).send("Update failed" + error.message);
   }
 })
 //add new user in databse 
 app.post("/signup", async (req, res) => {
+  console.log("00000000000000", req.body)
   try {
     const userObj = req.body;
     const user = new User(userObj);
+    console.log("111111111", user)
     await user.save();
-    res.send("User added successfully");
+    res.send(user);
   } catch (error) {
-    res.error(error)
+    res.status(400).send(error);
   }
 })
 
