@@ -37,3 +37,17 @@ create a user schema & user model
 create POST /signup API to add data to db
 push some documents using API calls from postman
 Error handling using try/catch
+
+differene between json object and js object
+add the express.json middleware to your app
+make your signup Api dynamic to receive data frm the end
+User.findOne with duplicate email,ids,which object get return first n why
+API -Get user by Id
+API = feed Api -> GET/feed =get all the users from the database
+API - get userbyId(findbyId)
+Create a delete user by Id api
+Difference between Patch and put
+API - Update a user
+Explore the mongoosse documentation for model methods
+what are options in a model.findByOneAndUpdate method,explore more about it
+API - Update the user with email Id

@@ -7,19 +7,83 @@ const connectDB = require("./config/database");
 //using express server
 const app = express();
 
+//started middleware for json for req.body
+app.use(express.json());
+
 const User = require("./models/user");
 
-app.post("/signup", async (req, res) => {
-  const userObj = {
-    firstName: "Virat",
-    lastName: "Kholi",
-    emails: "Virat@gmail.com",
-    password: "Virat@18"
-
+//find a single user
+app.get("/user", async (req, res) => {
+  try {
+    const userEmail = req.body.emailId;
+    const users = await User.findOne({ emailId: userEmail })
+    if (users.length === 0 || !users) {
+      res.send("User not found")
+    } else {
+      res.send(users);
+    }
+  } catch (error) {
+    return error;
   }
-  const user = new User(userObj);
-  await user.save();
-  res.send("User added successfully");
+})
+//find all users
+app.get("/getAllUser", async (req, res) => {
+  try {
+    const userEmail = req.body.emailId;
+    const user = await User.find({})
+    if (user.length === 0) {
+      res.send("User not found")
+    } else {
+      res.send(user)
+    }
+  } catch (error) {
+    return error;
+  }
+})
+
+//Delete a user
+app.delete("/deleteUser", async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const user = await User.findByIdAndDelete({ _id: userId });
+    // const user = await User.findByIdAndDelete(userId);
+    if (!user || user.length === 0) {
+      res.send("User not found");
+    } else {
+      res.send("User deleted successfully");
+    }
+  } catch (error) {
+    return error;
+  }
+})
+
+// Update data for a user
+app.patch("/updateUser", async (req, res) => {
+  const data = req.body;
+  const userId = req.body.userId;
+  console.log(data)
+  try {
+    const userData = await User.findByIdAndUpdate({ _id: userId }, data)
+    console.log(userData)
+    if (!userData || userData.length === 0) {
+      res.send("User not found")
+    } else {
+      res.send("User updated successfully")
+    }
+  } catch (error) {
+    return error;
+  }
+})
+//add new user in databse 
+app.post("/signup", async (req, res) => {
+  try {
+    const userObj = req.body;
+    const user = new User(userObj);
+    await user.save();
+    res.send("User added successfully");
+  } catch (error) {
+    res.error(error)
+  }
 })
 
 connectDB()
